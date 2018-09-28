@@ -174,7 +174,8 @@ li .left-wrapper .title-wrapper .title-content{
   white-space: nowrap;
   /*border:1px solid blue;*/
   flex-grow: 1;
-  width:0px;
+  width:10000px;
+  /*min-width: 10px;*/
 }
 li .left-wrapper .title-wrapper .title-content:hover{
   text-decoration: underline;
