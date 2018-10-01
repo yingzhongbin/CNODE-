@@ -7,7 +7,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import top from './components/top'
   import postList from './components/postList'
@@ -15,7 +14,8 @@
   import sideBar from './components/sideBar'
   import userInfo from './components/userInfo'
   import pagination from './components/pagination'
-export default {
+  import Vue from 'vue'
+  export default {
   name: 'App',
   components:{
     top,
@@ -23,12 +23,29 @@ export default {
     Article,
     userInfo,
     sideBar,
-    pagination
-  }
+    pagination,
+  },
+  data(){
+    return {
+    }
+  },
+  computed:{
+  },
+  // created(){
+  //   this.$root.bus.$on("mainLoaded",()=>{
+  //     console.log(9);
+  //     this.mainLoaded = true
+  //   })
+  //   this.$root.bus.$on("sidebarLoaded",()=>{
+  //     console.log(8);
+  //     this.sidebarLoaded = true
+  //   })
+  // }
 }
 </script>
 
 <style>
+
   *{
     padding: 0;
     margin: 0;

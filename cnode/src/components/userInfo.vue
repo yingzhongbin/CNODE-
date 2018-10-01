@@ -1,81 +1,83 @@
 <template>
-    <div class="user-info">
-      <div class="user-intro">
-        <div class="info-title">
-          <span>主页</span><span> /</span>
-        </div>
-        <div class="info-main">
-          <div class="info-main-top">
-            <div>
-              <img :src="userinfo.avatar_url" alt="">
-            </div>
-            <div>{{userinfo.loginname}}</div>
-          </div>
-          <div class="info-main-middle">
-            <p>{{userinfo.score}}积分</p>
-            <p>注册时间 {{userinfo.create_at | timeFormatter}}</p>
-          </div>
-          <p class="info-main-bottom"></p>
-        </div>
+  <div class="user-info">
+    <div class="user-intro">
+      <div class="info-title">
+        <span>主页</span><span> /</span>
       </div>
-      <div class="recent_replies">
-        <div class="info-title">最近创建的话题</div>
-        <div class="info-main topics">
-          <ul>
-            <li v-for="item in recent_topicsLimit">
-              <div class="left-wrapper">
-                <a class="author-img-wrapper">
-                  <img :src="item.author.avatar_url" alt="">
-                </a>
-                <span class="title-wrapper">
-                    <div class="title-content info">
-                        &nbsp;<router-link :to="{name:'Article',params:{id:item.id}}">
-                             {{item.title}}
-                          </router-link>
-                    </div>
-                  </span>
-              </div>
-              <span class="last-time-wrapper">
-              {{item.last_reply_at | timeFormatter}}
-            </span>
-            </li>
-          </ul>
+      <div class="info-main">
+        <div class="info-main-top">
+          <div>
+            <img :src="userinfo.avatar_url" alt="">
+          </div>
+          <div>{{userinfo.loginname}}</div>
         </div>
-      </div>
-      <div class="recent_topics">
-        <div class="info-title">最近参与的话题</div>
-        <div class="info-main topics">
-          <ul>
-            <li v-for="item in recent_repliesLimit">
-              <div class="left-wrapper">
-                <a class="author-img-wrapper">
-                  <router-link :to="{name:'userInfo',params:{name:item.author.loginname}}">
-                    <img :src="item.author.avatar_url" alt="">
-                  </router-link>
-                </a>
-                <span class="title-wrapper">
-                    <div class="title-content info">
-                      <a>
-                        &nbsp;<router-link :to="{name:'Article',params:{id:item.id}}">
-                           {{item.title}}
-                        </router-link>
-                      </a>
-                    </div>
-                </span>
-              </div>
-              <span class="last-time-wrapper">
-              {{item.last_reply_at | timeFormatter}}
-            </span>
-            </li>
-          </ul>
+        <div class="info-main-middle">
+          <p>{{userinfo.score}}积分</p>
+          <p>注册时间 {{userinfo.create_at | timeFormatter}}</p>
         </div>
+        <p class="info-main-bottom"></p>
       </div>
     </div>
+    <div class="recent_replies">
+      <div class="info-title">最近创建的话题</div>
+      <div class="info-main topics">
+        <ul>
+          <li v-for="item in recent_topicsLimit">
+            <div class="left-wrapper">
+              <a class="author-img-wrapper">
+                <img :src="item.author.avatar_url" alt="">
+              </a>
+              <span class="title-wrapper">
+                  <div class="title-content info">
+                      &nbsp;<router-link :to="{name:'Article',params:{id:item.id}}">
+                           {{item.title}}
+                        </router-link>
+                  </div>
+                </span>
+            </div>
+            <span class="last-time-wrapper">
+            {{item.last_reply_at | timeFormatter}}
+          </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="recent_topics">
+      <div class="info-title">最近参与的话题</div>
+      <div class="info-main topics">
+        <ul>
+          <li v-for="item in recent_repliesLimit">
+            <div class="left-wrapper">
+              <a class="author-img-wrapper">
+                <router-link :to="{name:'userInfo',params:{name:item.author.loginname}}">
+                  <img :src="item.author.avatar_url" alt="">
+                </router-link>
+              </a>
+              <span class="title-wrapper">
+                  <div class="title-content info">
+                    <a>
+                      &nbsp;<router-link :to="{name:'Article',params:{id:item.id}}">
+                         {{item.title}}
+                      </router-link>
+                    </a>
+                  </div>
+              </span>
+            </div>
+            <span class="last-time-wrapper">
+            {{item.last_reply_at | timeFormatter}}
+          </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+    import loading from './loading'
     export default {
-        name: "userInfo",
+      components:{loading},
+      name: "userInfo",
       data(){
           return {
               userinfo:{

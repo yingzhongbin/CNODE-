@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import fontIcon from './assets/js/font-icon'
+import prefixfree from './assets/js/prefixfree.min'
 import axios from 'axios'
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
@@ -54,5 +54,8 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data:{
+    bus:new Vue(),
+  }
 })

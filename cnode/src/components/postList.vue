@@ -1,6 +1,7 @@
 <template>
   <div id="list-container">
-    <div class="main">
+    <loading v-if="unloaded"/>
+    <div class="main" v-else>
       <div id="header">
         <a href="#" class="picked">全部</a>
         <a href="#">精华</a>
@@ -52,14 +53,16 @@
 </template>
 
 <script>
+    import loading from './loading'
     import Pagination from "./pagination";
     export default {
         name: "postList",
-        components: {Pagination},
+        components: {Pagination,loading},
         data(){
             return {
             items:[],
-            page:1
+            page:1,
+            unloaded:true
           }
         },
         beforeMount(){
@@ -76,15 +79,18 @@
               .then((data)=>{
                 console.log(data.data.data);
                 this.items = data.data.data
+                this.unloaded = false;
+                console.log(this);
               })
               .catch((err)=>{
                 console.log(err);
               })
           },
           HandleMsg(num){
+            console.log(this.unloaded);
+            // this.unloaded = true;
             this.page = num
             this.getData()
-            // console.log(num);
           },
         }
     }

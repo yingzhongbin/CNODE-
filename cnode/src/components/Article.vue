@@ -54,8 +54,8 @@
               author:{
                 loginname:''
               },
-              replies:[]
-            }
+              replies:[],
+            },
           }
         },
         beforeMount(){
@@ -70,6 +70,7 @@
               .then((data)=>{
                 this.item = data.data.data;
                 console.log(this.item.author.loginname);
+                // this.$root.bus.$emit("loaded",true)
               })
               .catch((err)=>{
                 console.log(err);
@@ -85,8 +86,12 @@
 </script>
 
 <style>
+
   @import url('../assets/css/github-markdown.css');
   @import url('../assets/css/mark-down.css');
+  .markdown-body pre code{
+    white-space:pre-wrap;
+  }
   #article-content{
     background-color: #E1E1E1;
     /*width:90%;*/

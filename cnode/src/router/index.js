@@ -4,6 +4,7 @@ import postList from '../components/postList'
 import Article from '../components/Article'
 import sideBar from '../components/sideBar'
 import userInfo from '../components/userInfo'
+// import loading from '../components/loading'
 Vue.use(Router)
 
 export default new Router({
