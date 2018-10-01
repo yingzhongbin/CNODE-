@@ -65,13 +65,6 @@
         beforeMount(){
           this.getData()
         },
-        // watch:{
-        //   '$route'(){
-        //     console.log(this.$route.params.page);
-        //     this.HandleMsg(this.$route.params.page)
-        //     console.log(5);
-        //   }
-        // },
         methods:{
           getData(){
             this.axios.get('https://cnodejs.org/api/v1/topics',{
