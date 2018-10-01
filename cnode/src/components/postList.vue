@@ -1,6 +1,6 @@
 <template>
   <div id="list-container">
-    <div id="main">
+    <div class="main">
       <div id="header">
         <a href="#" class="picked">全部</a>
         <a href="#">精华</a>
@@ -14,7 +14,9 @@
           <li v-for="item in items">
             <div class="left-wrapper">
               <a class="author-img-wrapper">
-                <img :src="item.author.avatar_url" alt="">
+                <router-link :to="{name:'userInfo',params:{name:item.author.loginname}}">
+                   <img :src="item.author.avatar_url" alt="">
+                </router-link>
               </a>
               <span class="reply-wrapper">
               <span class="reply_count">
@@ -29,11 +31,12 @@
                 <span :class="['title-type',{'title_great':(item.top || item.good)}]">
                     {{item | tabFormatter}}
                 </span>
-
                 <div class="title-content">
                   <a>
-                  &nbsp;{{item.title}}
-                </a>
+                    &nbsp;<router-link :to="{name:'Article',params:{id:item.id,name:item.author.loginname}}">
+                       {{item.title}}
+                     </router-link>
+                  </a>
                 </div>
             </span>
             </div>
@@ -42,28 +45,39 @@
             </span>
           </li>
         </ul>
+        <Pagination @sendMsg="HandleMsg"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+    import Pagination from "./pagination";
     export default {
         name: "postList",
+        components: {Pagination},
         data(){
-          return {
-            items:[]
+            return {
+            items:[],
+            page:1
           }
         },
         beforeMount(){
           this.getData()
         },
+        // watch:{
+        //   '$route'(){
+        //     console.log(this.$route.params.page);
+        //     this.HandleMsg(this.$route.params.page)
+        //     console.log(5);
+        //   }
+        // },
         methods:{
           getData(){
             this.axios.get('https://cnodejs.org/api/v1/topics',{
               params:{
-                page:1,
-                limit:20
+                page:this.page,
+                limit:40
               }
             })
               .then((data)=>{
@@ -73,7 +87,12 @@
               .catch((err)=>{
                 console.log(err);
               })
-          }
+          },
+          HandleMsg(num){
+            this.page = num
+            this.getData()
+            // console.log(num);
+          },
         }
     }
 </script>
@@ -82,36 +101,36 @@
 #list-container{
   padding: 20px 0px;
   background-color: #E1E1E1;
-
+  width: 100%;
 }
-#main{
-  width: 80%;
+.main{
+  width: 100%;
   font-size: 14px;
   margin: 0 auto;
 }
-#main #header{
+.main #header{
   padding: 10px;
   border-radius: 3px 3px 0px 0px;
   background-color: #f6f6f6;
 }
-#main #header a.picked{
+.main #header a.picked{
   background-color: #80bd01;
   color: #fff;
   padding: 3px 4px;
   border-radius: 3px;
 }
-#main #header a{
+.main #header a{
   text-decoration: none;
   margin: 0 10px;
   color: #80bd01;
 }
-#main #header a:hover{
+.main #header a:hover{
   color:#005580;
 }
-#main #content{
+.main #content{
   background-color: #fff;
 }
-#main #content ul li{
+.main #content ul li{
   border-top: 1px solid #F0F0F0;
   list-style-type: none;
   height: 30px;
@@ -119,71 +138,5 @@
   align-items: center;
   padding: 10px;
   display: flex;
-}
-li .left-wrapper{
-  display: flex;
-  /*flex-grow: 1;*/
-  width:calc(100% - 78px);
-  /*border:1px solid red;*/
-
-}
-li .left-wrapper .author-img-wrapper{}
-li .left-wrapper .author-img-wrapper img{
-  width: 30px;
-  height: 30px;
-}
-li .left-wrapper .reply-wrapper{
-  width: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-}
-li .left-wrapper .reply-wrapper .reply_count{
-  color: #9e78c0;
-  font-size: 14px;
-}
-li .left-wrapper .reply-wrapper .visit_count{
-  font-size: 10px;
-  color: #b4b4b4;
-}
-
-li .left-wrapper .title-wrapper{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /*border:1px solid red;*/
-  flex-grow: 1;
-}
-li .left-wrapper .title-wrapper .title-type{
-  background-color: #e5e5e5;
-  color: #999;
-  padding: 2px 4px;
-  font-size: 12px;
-  border-radius: 3px;
-  width: 26px;
-}
-.left-wrapper .title-wrapper .title-type.title_great{
-  background: #80bd01;
-  color: #fff;
-}
-li .left-wrapper .title-wrapper .title-content{
-  font-size: 16px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  /*border:1px solid blue;*/
-  flex-grow: 1;
-  width:0px;
-  /*min-width: 10px;*/
-}
-li .left-wrapper .title-wrapper .title-content:hover{
-  text-decoration: underline;
-}
-li .last-time-wrapper{
-  width:70px;
-  text-align: right;
-  font-size: 11px;
-  color: #778087;;
 }
 </style>

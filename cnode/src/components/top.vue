@@ -3,7 +3,9 @@
     <div id="container">
       <div id="left">
         <a href="#">
-          <img src="https://static2.cnodejs.org/public/images/cnodejs_light.svg" alt="">
+          <router-link :to="{name:'root'}">
+            <img src="https://static2.cnodejs.org/public/images/cnodejs_light.svg" alt="">
+          </router-link>
         </a>
         <div id="input-container">
           <input type="text" v-on:focus="focus" v-on:blur="blur" v-bind:class="{bg:isActive}">
@@ -15,7 +17,11 @@
       </div>
      <div id="right">
        <ul>
-         <li><a href="#">首页</a></li>
+         <li>
+           <a href="#">
+           <router-link :to="{name:'root'}">首页</router-link>
+           </a>
+         </li>
          <li><a href="#">新手入门</a></li>
          <li><a href="#">API</a></li>
          <li><a href="#">关于</a></li>
@@ -42,7 +48,9 @@
           return {
             isActive:false
           }
-        }
+        },
+      watch:{
+      }
     }
 </script>
 
@@ -101,7 +109,7 @@
   color: #666;
   transition: all .5s;
 }
-#left #input-container input.bg{
+#left #input-container input.bg,#left #input-container input:hover{
   background-color: #FFFFFF;
 }
 #left #input-container .icon{
@@ -121,7 +129,6 @@
     text-decoration: none;
     color:#ccc;
     font-size: 13px;
-    font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti,sans-serif!important;
     padding: 10px 15px;
   }
 

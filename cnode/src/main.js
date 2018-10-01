@@ -8,18 +8,21 @@ import axios from 'axios'
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
 Vue.filter('tabFormatter',(item)=>{
-  if(item.good){
-    return "精华"
-  }else if(item.top){
+  if(item.top){
     return "置顶"
+  }else if(item.good){
+    return "精华"
   }else if(item.tab === 'share'){
+    return "分享"
+  }else if(item.tab === 'ask'){
+    return "问答"
+  }else if(item.tab === 'job'){
+    return "招聘"
+  }
+})
+Vue.filter('labelFormatter',(item)=>{
+ if(item.tab === 'share'){
     return "分享"
   }else if(item.tab === 'ask'){
     return "问答"
@@ -42,8 +45,14 @@ Vue.filter('timeFormatter',(oldtime)=>{
   }else if(timeDistance/1000/60/60/24 <30){
     return parseInt(timeDistance/1000/60/60/24) +" 天前"
   }else if(timeDistance/1000/60/60/24/30 <12){
-    return parseInt(timeDistance/1000/60/60/24/30) +" 月前"
+    return parseInt(timeDistance/1000/60/60/24/30) +" 个月前"
   }else{
     return parseInt(timeDistance/1000/60/60/24/30/12) +" 年前"
   }
+})
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
 })
