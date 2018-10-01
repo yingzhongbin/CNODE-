@@ -1,7 +1,8 @@
 <template>
   <div id="list-container">
-    <loading v-if="unloaded"/>
-    <div class="main" v-else>
+    <!--<loading v-if="unloaded"/>-->
+    <!--<div class="main" v-else>-->
+    <div class="main">
       <div id="header">
         <a href="#" class="picked">全部</a>
         <a href="#">精华</a>
@@ -53,11 +54,12 @@
 </template>
 
 <script>
-    import loading from './loading'
+    // import loading from './loading'
     import Pagination from "./pagination";
     export default {
         name: "postList",
-        components: {Pagination,loading},
+        // components: {Pagination,loading},
+        components: {Pagination},
         data(){
             return {
             items:[],
@@ -81,6 +83,8 @@
                 this.items = data.data.data
                 this.unloaded = false;
                 console.log(this);
+                console.log("postList得到了");
+                this.$root.bus.$emit("over","postList得到了")
               })
               .catch((err)=>{
                 console.log(err);

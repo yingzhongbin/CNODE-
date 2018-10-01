@@ -56,6 +56,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   data:{
-    bus:new Vue(),
+    bus:new Vue()
   }
 })

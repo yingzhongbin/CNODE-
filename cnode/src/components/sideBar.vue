@@ -94,6 +94,9 @@
                 this.userinfo = data.data.data
                 console.log("userinfo");
                 console.log(this.userinfo);
+                console.log("边栏信息得到了");
+                this.$root.bus.$emit("sidebar","")
+
               })
               .catch((err)=>{
                 console.log(err);

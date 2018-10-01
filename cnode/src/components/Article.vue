@@ -61,6 +61,9 @@
         beforeMount(){
             this.getArticle()
         },
+        created(){
+          this.$root.bus.$emit("newPage","")
+        },
         computed:{
 
         },
@@ -70,7 +73,8 @@
               .then((data)=>{
                 this.item = data.data.data;
                 console.log(this.item.author.loginname);
-                // this.$root.bus.$emit("loaded",true)
+                console.log("文章加载完毕");
+                this.$root.bus.$emit("article","文章加载完毕")
               })
               .catch((err)=>{
                 console.log(err);

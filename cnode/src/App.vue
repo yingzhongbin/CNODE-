@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <top />
-    <div id="main">
+    <loading v-show="unloaded"/>
+    <div id="main" v-show="!unloaded">
       <router-view name="main"></router-view>
       <router-view name="sideBar"></router-view>
     </div>
@@ -14,7 +15,7 @@
   import sideBar from './components/sideBar'
   import userInfo from './components/userInfo'
   import pagination from './components/pagination'
-  import Vue from 'vue'
+  import loading from './components/loading'
   export default {
   name: 'App',
   components:{
@@ -24,23 +25,40 @@
     userInfo,
     sideBar,
     pagination,
+    loading
   },
   data(){
     return {
+      mainUnloaded:true,
+      sidebarUnloaded:true
     }
   },
   computed:{
+    unloaded(){
+      // console.log(this.mainUnloaded || this.sidebarUnloaded);
+      return this.mainUnloaded || this.sidebarUnloaded
+    }
   },
-  // created(){
-  //   this.$root.bus.$on("mainLoaded",()=>{
-  //     console.log(9);
-  //     this.mainLoaded = true
-  //   })
-  //   this.$root.bus.$on("sidebarLoaded",()=>{
-  //     console.log(8);
-  //     this.sidebarLoaded = true
-  //   })
-  // }
+  created(){
+    this.$root.bus.$on("newPage",(value)=>{
+      this.mainUnloaded = true
+      this.sidebarUnloaded = true
+      console.log("我是APP");
+    })
+    this.$root.bus.$on("over",(value)=>{
+      this.mainUnloaded = false
+      this.sidebarUnloaded = false
+      console.log("我是APP");
+    })
+    this.$root.bus.$on("article",(value)=>{
+      this.mainUnloaded = false
+      console.log("我是APP");
+    })
+    this.$root.bus.$on("sidebar",(value)=>{
+      this.sidebarUnloaded = false
+      console.log("我是APP");
+    })
+  }
 }
 </script>
 

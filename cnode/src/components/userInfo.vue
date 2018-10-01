@@ -104,11 +104,16 @@
               .then((data)=>{
                 this.userinfo = data.data.data
                 console.log(this.userinfo);
+                console.log("作者信息加载完毕");
+                this.$root.bus.$emit("over","")
               })
               .catch((err)=>{
                 console.log(err);
               })
           }
+      },
+      created(){
+        this.$root.bus.$emit("newPage","")
       },
       watch:{
           $route(){
