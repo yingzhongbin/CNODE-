@@ -4,11 +4,11 @@
     <!--<div class="main" v-else>-->
     <div class="main">
       <div id="header">
-        <a href="#" class="picked">全部</a>
-        <a href="#">精华</a>
-        <a href="#">分享</a>
-        <a href="#">问答</a>
-        <a href="#">招聘</a>
+        <a href="#" :class="{picked:picked == 'all'}" @click="getData('all')">全部</a>
+        <a href="#" :class="{picked:picked === 'good'}" @click="getData('good')">精华</a>
+        <a href="#" :class="{picked:picked === 'share'}" @click="getData('share')">分享</a>
+        <a href="#" :class="{picked:picked === 'ask'}" @click="getData('ask')">问答</a>
+        <a href="#" :class="{picked:picked === 'job'}" @click="getData('job')">招聘</a>
         <a href="#">客户端测试</a>
       </div>
       <div id="content">
@@ -62,33 +62,57 @@
         components: {Pagination},
         data(){
             return {
-            items:[],
-            page:1,
-            unloaded:true
-          }
+              items:[],
+              page:1,
+              unloaded:true,
+              picked:''
+            }
         },
         beforeMount(){
-          this.getData()
+          this.getData('all')
         },
         methods:{
-          getData(){
-            this.axios.get('https://cnodejs.org/api/v1/topics',{
-              params:{
-                page:this.page,
-                limit:40
-              }
-            })
-              .then((data)=>{
-                console.log(data.data.data);
-                this.items = data.data.data
-                this.unloaded = false;
-                console.log(this);
-                console.log("postList得到了");
-                this.$root.bus.$emit("over","postList得到了")
+          getData(value){
+            this.picked = value
+            if( value !== "all"){
+              this.axios.get('https://cnodejs.org/api/v1/topics',{
+                params:{
+                  page:this.page,
+                  limit:40,
+                  tab:value
+                }
               })
-              .catch((err)=>{
-                console.log(err);
+                .then((data)=>{
+                  console.log(data.data.data);
+                  this.items = data.data.data
+                  this.unloaded = false;
+                  console.log(this);
+                  console.log("postList得到了");
+                  this.$root.bus.$emit("over","postList得到了")
+                })
+                .catch((err)=>{
+                  console.log(err);
+                })
+            }else{
+              this.axios.get('https://cnodejs.org/api/v1/topics',{
+                params:{
+                  page:this.page,
+                  limit:40,
+                }
               })
+                .then((data)=>{
+                  console.log(data.data.data);
+                  this.items = data.data.data
+                  this.unloaded = false;
+                  console.log(this);
+                  console.log("postList得到了");
+                  this.$root.bus.$emit("over","postList得到了")
+                })
+                .catch((err)=>{
+                  console.log(err);
+                })
+            }
+
           },
           HandleMsg(num){
             console.log(this.unloaded);
@@ -129,6 +153,9 @@
 }
 .main #header a:hover{
   color:#005580;
+}
+.main #header a.picked{
+  color:white;
 }
 .main #content{
   background-color: #fff;

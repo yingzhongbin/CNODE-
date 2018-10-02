@@ -2,14 +2,14 @@
   <div class="pagination">
     <div class="btn-container">
       <div class="btn" @click="BtnClicked(3)">«</div>
-      <div class="btn"  v-if="picked>3">...</div>
+      <div class="btn more"  v-if="picked>3">...</div>
       <div v-for="item in pageNums"
            :class="['btn',{pick:item === picked}]"
            @click="BtnClicked(item)"
       >
         {{item}}
       </div>
-      <div class="btn" v-if="picked<85">...</div>
+      <div class="btn more" v-if="picked<85">...</div>
       <div class="btn" @click="BtnClicked(85)">»</div>
     </div>
   </div>
@@ -56,6 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
   .btn:hover{
     background-color: #F5F5F5;
@@ -69,5 +70,13 @@
   }
   .btn.pick{
     color: #80bd01;
+    cursor: none;
   }
+  .btn.pick:hover{
+    background-color: #fff;
+  }
+  .btn.more{
+    cursor: text;
+  }
+
 </style>
